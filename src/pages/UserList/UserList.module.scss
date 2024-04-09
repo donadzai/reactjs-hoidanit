@@ -1,0 +1,37 @@
+.btn {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin: 5px;
+}
+
+.icon {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.btn-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.btn-add-user {
+    font-size: 1.6rem;
+}
+
+.icon-btn {
+    margin: 4px;
+}
+
+.form-group {
+    margin: 10px 20px;
+}
+
+.btn.btn-trash {
+    display: block;
+}
+
+.trash-icon {
+    margin-right: 5px;
+    color: #151414;
+}

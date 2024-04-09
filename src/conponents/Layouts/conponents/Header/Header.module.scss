@@ -1,7 +1,74 @@
-.navbar-wrapper {
-    padding: 0;
+.container {
+    height: 60px;
+    width: 100%;
+    padding: 0 30px;
 }
 
-.home {
-    font-size: 1.6rem;
+.content {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.left-content {
+    width: 20%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+
+    span {
+        font-size: 24px;
+        color: #999;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .logo {
+        width: 100%;
+        height: 50px;
+
+        .logo-1 {
+            fill: #49bce2;
+        }
+
+        .logo-2 {
+            fill: #ffc10e;
+        }
+    }
+}
+
+.center-content {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 10px;
+
+    .header {
+        font-weight: 500;
+    }
+
+    .title {
+        color: #333;
+    }
+}
+
+.right-content {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+        font-size: 20px;
+        color: #666;
+        margin-right: 10px;
+    }
+
+    a {
+        text-decoration: none;
+        font-size: 16px;
+        color: #333;
+    }
 }

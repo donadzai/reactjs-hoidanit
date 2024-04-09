@@ -1,8 +1,8 @@
-import axios from 'axios';
+import { AXIOS } from '~/config/axios';
 
 async function userLogin(email, password) {
     try {
-        const userData = await axios.post('http://localhost:3001/api/login', {
+        const userData = await AXIOS.post('login', {
             email,
             password,
         });

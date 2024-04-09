@@ -28,11 +28,10 @@ function Login() {
 
     const handleLogin = async () => {
         const userInfo = await userLogin(email, password);
-        console.log(userInfo);
-        setUserData(userInfo.data);
+        if (userInfo) {
+            setUserData(userInfo.data);
+        }
     };
-
-    console.log(userData.errCode);
     return (
         <div className={cx('bg')}>
             <div className={cx('wrapper')}>
@@ -73,7 +72,7 @@ function Login() {
                             icon={eyeIcon ? faEyeSlash : faEye}
                         />
                     </div>
-                    <p>{userData.errCode ? `${userData.message}` : ''}</p>
+                    <p style={{ color: 'red' }}>{userData.errCode ? `${userData.message}` : ''}</p>
                     <button
                         onClick={() => {
                             handleLogin();
