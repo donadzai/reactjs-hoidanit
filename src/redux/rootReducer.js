@@ -1,11 +1,19 @@
 import { combineReducers } from 'redux';
 
-import counterReducer from './counter/reducer';
 import getAllUser from './getUser/reducer';
+import createNewUser from './createNewUser/reducer';
+import editUserFromReducer from './editUser/reducer';
+import deleteUserReducer from './deleteUser/reducer';
+import loginReducer from './login/reducer';
+import changeLangReducer from './translate/reducer';
 
 const rootReducer = combineReducers({
-    counter: counterReducer,
     getUser: getAllUser,
+    createNewUser: createNewUser,
+    editUserFromReducer: editUserFromReducer,
+    deleteUserReducer: deleteUserReducer,
+    login: loginReducer,
+    changLang: changeLangReducer,
 });
 
 export default rootReducer;

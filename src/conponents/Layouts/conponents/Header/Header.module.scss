@@ -71,4 +71,13 @@
         font-size: 16px;
         color: #333;
     }
+
+    .lang-btn {
+        padding: 5px;
+        cursor: pointer;
+    }
+
+    .btn-active {
+        color: red;
+    }
 }

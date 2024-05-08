@@ -2,9 +2,11 @@ import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 import styles from './Login.module.scss';
-import { userLogin } from '~/services';
+import { loginUser } from '~/redux/login/actions';
 
 const cx = classNames.bind(styles);
 
@@ -12,7 +14,11 @@ function Login() {
     const [eyeIcon, setEyeIcon] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [userData, setUserData] = useState({});
+
+    const res = useSelector((state) => state.login.userInfo);
+    const isLogin = useSelector((state) => state.login.isLogin);
+
+    const dispatch = useDispatch();
 
     const handleEyeIcon = () => {
         setEyeIcon(!eyeIcon);
@@ -26,12 +32,6 @@ function Login() {
         setPassword(e.target.value);
     };
 
-    const handleLogin = async () => {
-        const userInfo = await userLogin(email, password);
-        if (userInfo) {
-            setUserData(userInfo.data);
-        }
-    };
     return (
         <div className={cx('bg')}>
             <div className={cx('wrapper')}>
@@ -72,11 +72,9 @@ function Login() {
                             icon={eyeIcon ? faEyeSlash : faEye}
                         />
                     </div>
-                    <p style={{ color: 'red' }}>{userData.errCode ? `${userData.message}` : ''}</p>
+                    <p style={{ color: 'red' }}>{res.errCode ? `${res.message}` : ''}</p>
                     <button
-                        onClick={() => {
-                            handleLogin();
-                        }}
+                        onClick={() => dispatch(loginUser(email, password))}
                         type="button"
                         className={cx('btn btn-primary', 'btnCustomize')}
                     >
@@ -84,6 +82,8 @@ function Login() {
                     </button>
                 </form>
             </div>
+
+            {isLogin && <Navigate to="/" replace={true} />}
         </div>
     );
 }

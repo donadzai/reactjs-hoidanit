@@ -1,11 +1,32 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from './Header.module.scss';
 import classNames from 'classnames/bind';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+
+import styles from './Header.module.scss';
+import { changeEnglishLang, changeVietnameseLang } from '~/redux/translate/actions';
+
 const cx = classNames.bind(styles);
 
 function Header() {
+    const infUser = useSelector((state) => state.login.userInfo);
+
+    const isLogin = useSelector((state) => state.login.isLogin);
+
+    const isLang = useSelector((state) => state.changLang.isChangLang);
+
+    const dispatch = useDispatch();
+
+    const btnVNLang = cx('lang-btn', {
+        'btn-active': !isLang,
+    });
+
+    const btnENLang = cx('lang-btn', {
+        'btn-active': isLang,
+    });
+
     return (
         <div className={cx('container')}>
             <div className={cx('content')}>
@@ -32,27 +53,76 @@ function Header() {
                 </div>
                 <div className={cx('center-content')}>
                     <div className={cx('child-content')}>
-                        <div className={cx('header')}>Chuyên khoa</div>
-                        <div className={cx('title')}>Tìm bác sĩ theo chuyên khoa</div>
+                        <div className={cx('header')}>
+                            <FormattedMessage id="specialist" />
+                        </div>
+                        <div className={cx('title')}>
+                            <FormattedMessage id="finddoctor" />
+                        </div>
                     </div>
                     <div className={cx('child-content')}>
-                        <div className={cx('header')}>Cơ sở y tế</div>
-                        <div className={cx('title')}>Chọn bệnh viện phòng khám</div>
+                        <div className={cx('header')}>
+                            <FormattedMessage id="healthfacilities" />
+                        </div>
+                        <div className={cx('title')}>
+                            <FormattedMessage id="choosehospital" />
+                        </div>
                     </div>
                     <div className={cx('child-content')}>
-                        <div className={cx('header')}>Bác sĩ</div>
-                        <div className={cx('title')}>Chọn bác sĩ giỏi</div>
+                        <div className={cx('header')}>
+                            <FormattedMessage id="doctor" />
+                        </div>
+                        <div className={cx('title')}>
+                            <FormattedMessage id="choosedoctor" />
+                        </div>
                     </div>
                     <div className={cx('child-content')}>
-                        <div className={cx('header')}>Gói khám</div>
-                        <div className={cx('title')}>Khám sức khỏe tổng quát</div>
+                        <div className={cx('header')}>
+                            <FormattedMessage id="examinationpackage" />
+                        </div>
+                        <div className={cx('title')}>
+                            <FormattedMessage id="generalhealthcheck" />
+                        </div>
                     </div>
                 </div>
                 <div className={cx('right-content')}>
-                    <span>
-                        <FontAwesomeIcon icon={faCircleQuestion} />
-                    </span>
-                    <a href="/support">Hỗ trợ</a>
+                    <div>
+                        <span>
+                            <FontAwesomeIcon icon={faCircleQuestion} />
+                        </span>
+                        <a href="/support">
+                            <FormattedMessage id="support" />
+                        </a>
+                    </div>
+
+                    <div>
+                        <span
+                            onClick={() => {
+                                dispatch(changeVietnameseLang());
+                            }}
+                            className={cx(btnVNLang)}
+                        >
+                            VN
+                        </span>
+                        <span
+                            onClick={() => {
+                                dispatch(changeEnglishLang());
+                            }}
+                            className={cx(btnENLang)}
+                        >
+                            EN
+                        </span>
+                    </div>
+
+                    <div>
+                        {isLogin ? (
+                            <button>
+                                {infUser.user.lastName} {infUser.user.firstName}
+                            </button>
+                        ) : (
+                            <button>Login</button>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
