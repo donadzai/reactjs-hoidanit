@@ -12,6 +12,7 @@ import styles from './home.module.scss';
 import Banner from './Banner';
 import ModelForm from '~/conponents/model';
 import Loader from '~/conponents/loader';
+import SpecialtySlider from './Sections/SpecialtySlider/specialty';
 
 const cx = classNames.bind(styles);
 
@@ -62,6 +63,7 @@ function Home() {
 
                 <div className={cx('banner-content')}>
                     <Banner />
+                    <SpecialtySlider />
                     <Button
                         onClick={() => {
                             if (!isLogin) {
