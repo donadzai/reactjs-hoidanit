@@ -1,0 +1,124 @@
+.wrapper {
+    background-image: url('../../../../assets/images/doctorList/bgr.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 34px 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 34px;
+
+    .header-btn {
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: 500;
+        background-color: rgb(218, 243, 246);
+        color: rgb(52, 146, 158);
+        padding: 10px;
+        border-radius: 32px;
+    }
+}
+
+.wrapper-content {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .title {
+        font-size: 1.4rem;
+        color: #333;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .sub {
+        font-size: 1rem;
+        text-align: center;
+        color: rgb(98, 98, 98);
+    }
+}
+
+.img1 {
+    background-image: url('../../../../assets/images/doctorList/doctor1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 220px;
+    width: 220px;
+    border-radius: 50%;
+}
+
+.img2 {
+    background-image: url('../../../../assets/images/doctorList/doctor2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 220px;
+    width: 220px;
+    border-radius: 50%;
+}
+
+.img3 {
+    background-image: url('../../../../assets/images/doctorList/doctor3.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 220px;
+    width: 220px;
+    border-radius: 50%;
+}
+
+.img4 {
+    background-image: url('../../../../assets/images/doctorList/doctor4.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 220px;
+    width: 220px;
+    border-radius: 50%;
+}
+
+.img5 {
+    background-image: url('../../../../assets/images/doctorList/doctor5.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 220px;
+    width: 220px;
+    border-radius: 50%;
+}
+
+.img6 {
+    background-image: url('../../../../assets/images/doctorList/doctor6.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 220px;
+    width: 220px;
+    border-radius: 50%;
+}
+
+.img7 {
+    background-image: url('../../../../assets/images/doctorList/doctor7.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 220px;
+    width: 220px;
+    border-radius: 50%;
+}
+
+.img8 {
+    background-image: url('../../../../assets/images/doctorList/doctor8.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 220px;
+    width: 220px;
+    border-radius: 50%;
+}

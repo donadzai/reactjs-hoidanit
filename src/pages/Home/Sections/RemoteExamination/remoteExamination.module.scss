@@ -1,0 +1,111 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.btn {
+    font-size: 1.4rem;
+    color: rgb(52, 146, 158);
+    text-decoration: none;
+    background-color: rgb(218, 243, 246);
+    padding: 6px 4px;
+    border-radius: 16px;
+    font-weight: 500;
+    display: block;
+}
+
+.slide-wrapper {
+    padding-right: 20px;
+}
+
+.slide-content {
+    padding: 20px 10px;
+    border: 1px solid rgb(241, 241, 241);
+    border-radius: 26px;
+}
+
+.img1 {
+    position: relative;
+    background-image: url('../../../../assets/images/remoteExamination/remote1.png');
+    height: 216px;
+    width: 330px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 26px;
+}
+
+.img2 {
+    position: relative;
+    background-image: url('../../../../assets/images/remoteExamination/remote2.png');
+    height: 216px;
+    width: 330px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 26px;
+}
+
+.img3 {
+    position: relative;
+    background-image: url('../../../../assets/images/remoteExamination/remote3.png');
+    height: 216px;
+    width: 330px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 26px;
+}
+
+.img4 {
+    position: relative;
+    background-image: url('../../../../assets/images/remoteExamination/remote4.png');
+    height: 216px;
+    width: 330px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 26px;
+}
+
+.img5 {
+    position: relative;
+    background-image: url('../../../../assets/images/remoteExamination/remote5.png');
+    height: 216px;
+    width: 330px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 26px;
+}
+
+.img6 {
+    position: relative;
+    background-image: url('../../../../assets/images/remoteExamination/remote6.png');
+    height: 216px;
+    width: 330px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 26px;
+}
+
+.icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #fff;
+    padding: 12px 11px;
+    border-radius: 12px;
+    background-color: rgb(255, 196, 25);
+}
+
+.title {
+    width: 330px;
+    font-size: 1.4rem;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 500;
+}

@@ -1,0 +1,145 @@
+.wrapper {
+    margin-top: 60px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.btn {
+    font-size: 1.4rem;
+    color: rgb(52, 146, 158);
+    text-decoration: none;
+    background-color: rgb(218, 243, 246);
+    padding: 6px 4px;
+    border-radius: 16px;
+    font-weight: 500;
+}
+
+.title {
+    font-weight: 600;
+    margin-top: 14px;
+    overflow: hidden;
+    width: 268px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.img1 {
+    background-image: url('../../../../assets/images/liveHealthy/liveHealthy1.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 268px;
+    height: 142px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 20px;
+}
+
+.img2 {
+    background-image: url('../../../../assets/images/liveHealthy/liveHealthy2.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 268px;
+    height: 142px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 20px;
+}
+
+.img3 {
+    background-image: url('../../../../assets/images/liveHealthy/liveHealthy3.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 268px;
+    height: 142px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 20px;
+}
+
+.img4 {
+    background-image: url('../../../../assets/images/liveHealthy/liveHealthy4.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 268px;
+    height: 142px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 20px;
+}
+
+.img5 {
+    background-image: url('../../../../assets/images/liveHealthy/liveHealthy5.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 268px;
+    height: 142px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 20px;
+}
+
+.img6 {
+    background-image: url('../../../../assets/images/liveHealthy/liveHealthy6.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 268px;
+    height: 142px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 20px;
+}
+
+.img7 {
+    background-image: url('../../../../assets/images/liveHealthy/liveHealthy7.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 268px;
+    height: 142px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 20px;
+}
+
+.img8 {
+    background-image: url('../../../../assets/images/liveHealthy/liveHealthy8.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 268px;
+    height: 142px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 20px;
+}
+
+.btn-control {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    align-items: center;
+}
+
+.btn-wrapper {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid rgb(190, 190, 190);
+    border-radius: 20px;
+    padding: 11px 4px;
+    gap: 36px;
+}
+
+.control {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    flex: 1;
+}
+
+.icon {
+    font-size: 1.4rem;
+}

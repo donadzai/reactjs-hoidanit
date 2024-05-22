@@ -13,6 +13,17 @@ import Banner from './Banner';
 import ModelForm from '~/conponents/model';
 import Loader from '~/conponents/loader';
 import SpecialtySlider from './Sections/SpecialtySlider/specialty';
+import Hospital from './Sections/Hospital';
+import ForYou from './Sections/ForYou';
+import ServiceSection from './Sections/ServiceSection';
+import DoctorList from './Sections/DoctorList';
+import RemoteExamination from './Sections/RemoteExamination';
+import Suggestion from './Sections/Suggestion';
+import MentalHealth from './Sections/MentalHealth';
+import Answerd from './Sections/Answerd';
+import HandBook from './Sections/Handbook';
+import LiveHealthy from './Sections/LiveHealthy';
+import Information from './Sections/Informations';
 
 const cx = classNames.bind(styles);
 
@@ -63,8 +74,19 @@ function Home() {
 
                 <div className={cx('banner-content')}>
                     <Banner />
+                    <ForYou />
+                    <ServiceSection />
                     <SpecialtySlider />
-                    <Button
+                    <Hospital />
+                    <DoctorList />
+                    <RemoteExamination />
+                    <Suggestion />
+                    <MentalHealth />
+                    <Answerd />
+                    <HandBook />
+                    <LiveHealthy />
+                    <Information />
+                    {/* <Button
                         onClick={() => {
                             if (!isLogin) {
                                 navigate('/login');
@@ -77,8 +99,8 @@ function Home() {
                         variant="primary"
                     >
                         Add a new user
-                    </Button>
-                    <Table striped bordered hover>
+                    </Button> */}
+                    {/* <Table striped bordered hover>
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -133,11 +155,11 @@ function Home() {
                                 </>
                             )}
                         </tbody>
-                    </Table>
+                    </Table> */}
                 </div>
             </div>
 
-            <ModelForm id={id} childFunc={childFunc} handleClose={handleClose} show={show} />
+            {/* <ModelForm id={id} childFunc={childFunc} handleClose={handleClose} show={show} /> */}
         </>
     );
 }

@@ -1,0 +1,44 @@
+.header {
+    color: #333;
+    margin: 40px 0 20px 0;
+}
+
+.wrapper-content {
+    display: flex;
+    justify-content: flex-start;
+    gap: 80px;
+}
+
+.child-wrapper {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.child-img1 {
+    background-image: url('../../../../assets/images/suggestion/suggestion1.png');
+    height: 220px;
+    width: 220px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.child-img2 {
+    background-image: url('../../../../assets/images/suggestion/suggestion2.png');
+    height: 220px;
+    width: 220px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.child-title {
+    font-size: 1.6rem;
+    color: #333;
+    text-align: center;
+}

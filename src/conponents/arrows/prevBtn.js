@@ -7,7 +7,9 @@ const cx = classNames.bind(styles);
 
 function PrevArrow(props) {
     const { className, onClick } = props;
-    const customizeBtn = cx(className, 'customize-btn-prev');
+    const customizeBtn = cx(className, 'customize-btn-prev', {
+        'position-customize-from-remote': props.customizeFromRemote,
+    });
     return (
         <div className={cx(customizeBtn)} onClick={onClick}>
             <FontAwesomeIcon className={cx('icon')} icon={faAngleLeft} />
