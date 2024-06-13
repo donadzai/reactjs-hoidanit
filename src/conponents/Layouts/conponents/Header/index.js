@@ -1,14 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { faBars, faClockRotateLeft, faHeadset, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons';
-import { useSelector, useDispatch } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { useEffect, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import styles from './Header.module.scss';
-import { changeEnglishLang, changeVietnameseLang } from '~/redux/translate/actions';
-
 const cx = classNames.bind(styles);
 
 function Header() {
@@ -32,22 +28,6 @@ function Header() {
             getTitle();
         }, 3000);
     }, []);
-
-    const infUser = useSelector((state) => state.login.userInfo);
-
-    const isLogin = useSelector((state) => state.login.isLogin);
-
-    const isLang = useSelector((state) => state.changLang.isChangLang);
-
-    const dispatch = useDispatch();
-
-    const btnVNLang = cx('lang-btn', {
-        'btn-active': !isLang,
-    });
-
-    const btnENLang = cx('lang-btn', {
-        'btn-active': isLang,
-    });
 
     const className = cx('child-content', {
         active: true,

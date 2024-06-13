@@ -11,15 +11,3 @@ export const changeEnglishLang = () => {
         type: CHANGE_ENGLISH_LANGUAGE,
     };
 };
-
-// export const loginSucess = () => {
-//     return {
-//         type: CHANGE_LANGUAGE_SUCCESS,
-//     };
-// };
-
-// export const loginError = () => {
-//     return {
-//         type: CHANGE_LANGUAGE_ERROR,
-//     };
-// };

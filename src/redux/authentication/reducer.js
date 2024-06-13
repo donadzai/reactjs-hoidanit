@@ -1,7 +1,8 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_ERROR } from './types';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_ERROR, LOG_OUT } from './types';
 
 const INITIAL_STATE = {
     userInfo: [],
+    loginError: [],
     isLogin: false,
     isLoginRequest: false,
     isLoginError: false,
@@ -28,7 +29,16 @@ const loginReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 isLoginError: true,
+                loginError: action.inFoError,
                 isLoginRequest: false,
+            };
+
+        case LOG_OUT:
+            return {
+                ...state,
+                userInfo: [],
+                loginError: [],
+                isLogin: false,
             };
 
         default:

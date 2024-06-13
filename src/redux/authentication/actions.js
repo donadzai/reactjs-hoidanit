@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_ERROR } from './types';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_ERROR, LOG_OUT } from './types';
 import { AXIOS } from '~/config/axios';
 
 export const loginUser = (email, password) => {
@@ -6,9 +6,13 @@ export const loginUser = (email, password) => {
         dispatch(loginRequest());
         try {
             const res = await AXIOS.post('/login', { email, password });
-            dispatch(loginSucess(res));
+            if (res.data.errCode !== 0) {
+                dispatch(loginError(res.data.message));
+            } else {
+                dispatch(loginSucess(res));
+            }
         } catch (e) {
-            dispatch(loginError());
+            console.log(e);
         }
     };
 };
@@ -26,8 +30,15 @@ export const loginSucess = (userData) => {
     };
 };
 
-export const loginError = () => {
+export const loginError = (errorMess) => {
     return {
         type: LOGIN_ERROR,
+        inFoError: errorMess,
+    };
+};
+
+export const logout = () => {
+    return {
+        type: LOG_OUT,
     };
 };

@@ -1,0 +1,42 @@
+.preview-img {
+    border: 1px solid #eee;
+    width: 40%;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 32px;
+    background-color: #eee;
+    cursor: pointer;
+
+    .upload-img {
+        cursor: pointer;
+
+        span {
+            margin-right: 10px;
+        }
+    }
+}
+
+.view {
+    width: 400px;
+    height: 400px;
+}
+
+.fullScreen {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: contain;
+    background-repeat: no-repeat no-repeat;
+    background-position: center center;
+    background-color: black;
+
+    &.can-see {
+        display: block;
+    }
+}

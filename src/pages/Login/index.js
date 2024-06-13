@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 import styles from './Login.module.scss';
-import { loginUser } from '~/redux/login/actions';
+import { loginUser } from '~/redux/authentication/actions';
 
 const cx = classNames.bind(styles);
 
@@ -15,7 +15,9 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const res = useSelector((state) => state.login.userInfo);
+    const [isClickLogin, setisClickLogin] = useState(false);
+
+    const res = useSelector((state) => state.login.loginError);
     const isLogin = useSelector((state) => state.login.isLogin);
 
     const dispatch = useDispatch();
@@ -72,9 +74,12 @@ function Login() {
                             icon={eyeIcon ? faEyeSlash : faEye}
                         />
                     </div>
-                    <p style={{ color: 'red' }}>{res.errCode ? `${res.message}` : ''}</p>
+                    {isLogin || (isClickLogin && <p style={{ color: 'red' }}>{res}</p>)}
                     <button
-                        onClick={() => dispatch(loginUser(email, password))}
+                        onClick={() => {
+                            setisClickLogin(true);
+                            dispatch(loginUser(email, password));
+                        }}
                         type="button"
                         className={cx('btn btn-primary', 'btnCustomize')}
                     >
@@ -83,7 +88,7 @@ function Login() {
                 </form>
             </div>
 
-            {isLogin && <Navigate to="/" replace={true} />}
+            {isLogin && <Navigate to="/manageUsers" replace={true} />}
         </div>
     );
 }

@@ -1,0 +1,76 @@
+.wrapper {
+    background-color: blue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.menu {
+    display: flex;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    span {
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .info {
+        position: relative;
+        padding: 10px;
+        cursor: pointer;
+
+        &:hover > .choices {
+            display: block;
+        }
+
+        .choices {
+            position: absolute;
+            background-color: #fff;
+            top: 40px;
+            right: 0;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            width: 150px;
+            display: none;
+
+            &.choices::before {
+                content: '';
+                display: block;
+                position: absolute;
+                width: 0;
+                height: 0;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-bottom: 10px solid #fff;
+                top: -10px;
+                right: 27%;
+            }
+
+            .list-choices {
+                list-style: none;
+                padding: 0px;
+                margin: 0;
+            }
+
+            .choice:last-child {
+                border-top: 1px solid #333;
+            }
+
+            .choice {
+                padding: 10px;
+
+                &:hover {
+                    background-color: #ece5e5;
+                }
+            }
+        }
+    }
+}
+
+// chuẩn bị tách
