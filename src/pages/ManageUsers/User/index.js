@@ -17,6 +17,57 @@ function User() {
     const [url, setUrl] = useState('');
     const [fullScreen, setFullScream] = useState(false);
 
+    const [emailInput, setEmailInput] = useState('');
+    const [passwordInput, setPasswordInput] = useState('');
+    const [firstNameInput, setFirstNameInput] = useState('');
+    const [lastNameInput, setLastNameInput] = useState('');
+    const [phoneNumberInput, setPhoneNumberInput] = useState('');
+    const [addressInput, setAddressInput] = useState('');
+    const [genderInput, setGenderInput] = useState('');
+    const [positionInput, setPositionInput] = useState('');
+    const [roleInput, setRoleInput] = useState('');
+    // const [avatarInput, setAvatarInput] = useState('');
+
+    const handleCreate = () => {
+        const data = [
+            emailInput,
+            passwordInput,
+            firstNameInput,
+            lastNameInput,
+            phoneNumberInput,
+            addressInput,
+            genderInput,
+            positionInput,
+            roleInput,
+        ];
+
+        const inputTitles = [
+            'emailInput',
+            'passwordInput',
+            'firstNameInput',
+            'lastNameInput',
+            'phoneNumberInput',
+            'addressInput',
+            'genderInput',
+            'positionInput',
+            'roleInput',
+        ];
+
+        let isCreate = true;
+
+        for (let index = 0; index < data.length; index++) {
+            if (!data[index]) {
+                isCreate = false;
+                alert(`missing ${inputTitles[index]}`);
+                break;
+            }
+        }
+
+        if (isCreate) {
+            alert('Create Successfully!!!!');
+        }
+    };
+
     const isLang = useSelector((state) => state.changLang.isChangLang);
 
     const className = cx('fullScreen', {
@@ -66,49 +117,98 @@ function User() {
                             <label className="form-label">
                                 <FormattedMessage id="email_address" />
                             </label>
-                            <input type="email" className="form-control" />
+                            <input
+                                onChange={(e) => {
+                                    setEmailInput(e.target.value);
+                                }}
+                                value={emailInput}
+                                type="email"
+                                className="form-control"
+                            />
                         </div>
 
                         <div className="col-3">
                             <label className="form-label">
                                 <FormattedMessage id="password" />
                             </label>
-                            <input type="password" className="form-control" />
+                            <input
+                                onChange={(e) => {
+                                    setPasswordInput(e.target.value);
+                                }}
+                                value={passwordInput}
+                                type="password"
+                                className="form-control"
+                            />
                         </div>
 
                         <div className="col-3">
                             <label className="form-label">
                                 <FormattedMessage id="first_name" />
                             </label>
-                            <input type="text" className="form-control" />
+                            <input
+                                onChange={(e) => {
+                                    setFirstNameInput(e.target.value);
+                                }}
+                                value={firstNameInput}
+                                type="text"
+                                className="form-control"
+                            />
                         </div>
 
                         <div className="col-3">
                             <label className="form-label">
                                 <FormattedMessage id="last_name" />
                             </label>
-                            <input type="text" className="form-control" />
+                            <input
+                                onChange={(e) => {
+                                    setLastNameInput(e.target.value);
+                                }}
+                                value={lastNameInput}
+                                type="text"
+                                className="form-control"
+                            />
                         </div>
 
                         <div className="col-3">
                             <label className="form-label">
                                 <FormattedMessage id="phone_number" />
                             </label>
-                            <input type="text" className="form-control" />
+                            <input
+                                onChange={(e) => {
+                                    setPhoneNumberInput(e.target.value);
+                                }}
+                                value={phoneNumberInput}
+                                type="text"
+                                className="form-control"
+                            />
                         </div>
 
                         <div className="col-9">
                             <label className="form-label">
                                 <FormattedMessage id="address" />
                             </label>
-                            <input type="text" className="form-control" />
+                            <input
+                                onChange={(e) => {
+                                    setAddressInput(e.target.value);
+                                }}
+                                value={addressInput}
+                                type="text"
+                                className="form-control"
+                            />
                         </div>
 
                         <div className="col-3">
                             <label className="form-label">
                                 <FormattedMessage id="gender" />
                             </label>
-                            <select className="form-select" aria-label="Default select example">
+                            <select
+                                onChange={(e) => {
+                                    setGenderInput(e.target.value);
+                                }}
+                                value={genderInput}
+                                className="form-select"
+                                aria-label="Default select example"
+                            >
                                 {gender.length > 0 &&
                                     gender.map((item, index) => {
                                         return (
@@ -124,7 +224,14 @@ function User() {
                             <label className="form-label">
                                 <FormattedMessage id="position" />
                             </label>
-                            <select className="form-select" aria-label="Default select example">
+                            <select
+                                onChange={(e) => {
+                                    setPositionInput(e.target.value);
+                                }}
+                                value={positionInput}
+                                className="form-select"
+                                aria-label="Default select example"
+                            >
                                 {position.length > 0 &&
                                     position.map((item, index) => {
                                         return (
@@ -140,7 +247,14 @@ function User() {
                             <label className="form-label">
                                 <FormattedMessage id="role" />
                             </label>
-                            <select className="form-select" aria-label="Default select example">
+                            <select
+                                onChange={(e) => {
+                                    setRoleInput(e.target.value);
+                                }}
+                                value={roleInput}
+                                className="form-select"
+                                aria-label="Default select example"
+                            >
                                 {role.length > 0 &&
                                     role.map((item, index) => {
                                         return (
@@ -199,7 +313,12 @@ function User() {
                         </div>
                     </div>
                 </form>
-                <button className="btn btn-primary">
+                <button
+                    onClick={() => {
+                        handleCreate();
+                    }}
+                    className="btn btn-primary"
+                >
                     <FormattedMessage id="create" />
                 </button>
             </div>
