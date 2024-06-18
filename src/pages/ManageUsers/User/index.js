@@ -1,12 +1,14 @@
 import classNames from 'classnames/bind';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-
-import styles from './user.module.scss';
-import { AXIOS } from '~/config/axios';
 import { FormattedMessage } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+
+import styles from './user.module.scss';
+import TableUsers from './TableUsers';
+import { getAllRoles, getAllGenders, getAllPositions, checkInput, createANewUser } from '~/services/User';
+import Toast from '~/conponents/Toast';
 
 const cx = classNames.bind(styles);
 
@@ -28,66 +30,15 @@ function User() {
     const [roleInput, setRoleInput] = useState('');
     // const [avatarInput, setAvatarInput] = useState('');
 
-    const handleCreate = () => {
-        const data = [
-            emailInput,
-            passwordInput,
-            firstNameInput,
-            lastNameInput,
-            phoneNumberInput,
-            addressInput,
-            genderInput,
-            positionInput,
-            roleInput,
-        ];
-
-        const inputTitles = [
-            'emailInput',
-            'passwordInput',
-            'firstNameInput',
-            'lastNameInput',
-            'phoneNumberInput',
-            'addressInput',
-            'genderInput',
-            'positionInput',
-            'roleInput',
-        ];
-
-        let isCreate = true;
-
-        for (let index = 0; index < data.length; index++) {
-            if (!data[index]) {
-                isCreate = false;
-                alert(`missing ${inputTitles[index]}`);
-                break;
-            }
-        }
-
-        if (isCreate) {
-            alert('Create Successfully!!!!');
-        }
-    };
+    const refreshTable = useRef();
+    const handleShowToast = useRef();
+    const handleShowToastFc = handleShowToast.current;
 
     const isLang = useSelector((state) => state.changLang.isChangLang);
 
     const className = cx('fullScreen', {
         'can-see': fullScreen,
     });
-
-    const getAllRoles = async () => {
-        const allRoles = await AXIOS.get('/allcodes/role');
-        return allRoles.data.data.data;
-    };
-
-    const getAllGenders = async () => {
-        const allGenders = await AXIOS.get('/allcodes/gender');
-        return allGenders.data.data.data;
-    };
-
-    const getAllPositions = async () => {
-        const allPositions = await AXIOS.get('/allcodes/position');
-        return allPositions.data.data.data;
-    };
 
     useEffect(() => {
         Promise.all([getAllRoles(), getAllGenders(), getAllPositions()]).then((values) => {
@@ -99,6 +50,51 @@ function User() {
 
     const deleteUrl = () => {
         window.URL.revokeObjectURL(url);
+    };
+
+    const handleCreate = async () => {
+        const canCreate = checkInput(
+            emailInput,
+            passwordInput,
+            firstNameInput,
+            lastNameInput,
+            phoneNumberInput,
+            addressInput,
+            genderInput,
+            positionInput,
+            roleInput,
+            handleShowToastFc,
+        );
+
+        if (canCreate) {
+            await createANewUser(
+                emailInput,
+                passwordInput,
+                firstNameInput,
+                lastNameInput,
+                phoneNumberInput,
+                addressInput,
+                genderInput,
+                positionInput,
+                roleInput,
+            );
+
+            refreshTable.current();
+
+            handleShowToast.current({
+                type: 'success',
+                message: 'You created user successfully!',
+                header: 'Success!',
+                icon: 'check',
+            });
+
+            setEmailInput('');
+            setPasswordInput('');
+            setFirstNameInput('');
+            setLastNameInput('');
+            setPhoneNumberInput('');
+            setAddressInput('');
+        }
     };
 
     return (
@@ -209,6 +205,7 @@ function User() {
                                 className="form-select"
                                 aria-label="Default select example"
                             >
+                                <option value="">Choose...</option>
                                 {gender.length > 0 &&
                                     gender.map((item, index) => {
                                         return (
@@ -232,12 +229,15 @@ function User() {
                                 className="form-select"
                                 aria-label="Default select example"
                             >
+                                <option value="">Choose...</option>
                                 {position.length > 0 &&
                                     position.map((item, index) => {
                                         return (
-                                            <option key={index} value={item.valueVi}>
-                                                {isLang ? item.valueEn : item.valueVi}
-                                            </option>
+                                            <>
+                                                <option key={index} value={item.valueVi}>
+                                                    {isLang ? item.valueEn : item.valueVi}
+                                                </option>
+                                            </>
                                         );
                                     })}
                             </select>
@@ -255,6 +255,7 @@ function User() {
                                 className="form-select"
                                 aria-label="Default select example"
                             >
+                                <option value="">Choose...</option>
                                 {role.length > 0 &&
                                     role.map((item, index) => {
                                         return (
@@ -322,6 +323,9 @@ function User() {
                     <FormattedMessage id="create" />
                 </button>
             </div>
+
+            <TableUsers refreshTable={refreshTable} handleShowToast={handleShowToast.current} />
+            <Toast getHandleShowToastFc={handleShowToast} />
         </div>
     );
 }
