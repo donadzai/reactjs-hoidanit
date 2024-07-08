@@ -6,8 +6,14 @@ import { useDispatch } from 'react-redux';
 
 import { createNewUser } from '~/redux/createNewUser/actions';
 import { editUser } from '~/redux/editUser/actions';
+import { AXIOS } from '~/config/axios';
+import { getAllSelects, checkInput } from '~/services/User';
 
-function ModelForm({ id, childFunc, handleClose, show }) {
+function ModelForm({ idUser, takeFcFromChildToParent, allUsers, handleShowToast }) {
+    const [genderSeclect, setGenderSeclect] = useState([]);
+    const [roleSeclect, setRoleSeclect] = useState([]);
+    const [positionSeclect, setPositionSeclect] = useState([]);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -15,7 +21,38 @@ function ModelForm({ id, childFunc, handleClose, show }) {
     const [address, setAddress] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [gender, setGender] = useState('');
+    const [position, setPosition] = useState('');
     const [role, setRole] = useState('');
+
+    const [img, setImage] = useState('');
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+
+    const handleShow = () => setShow(true);
+
+    const handleGetInfoUser = async (id) => {
+        try {
+            if (id) {
+                const infoAUser = await AXIOS.get(`/user/?id=${id}`);
+
+                if (infoAUser) {
+                    setEmail(infoAUser.data.data.email);
+                    setFirstName(infoAUser.data.data.firstName);
+                    setLastName(infoAUser.data.data.lastName);
+                    setAddress(infoAUser.data.data.address);
+                    setPhoneNumber(infoAUser.data.data.phonenumber);
+                    setGender(infoAUser.data.data.gender);
+                    setRole(infoAUser.data.data.roleId);
+                    setPosition(infoAUser.data.data.positionId);
+                    setImage(infoAUser.data.data.image);
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     let data = {
         email,
@@ -26,6 +63,7 @@ function ModelForm({ id, childFunc, handleClose, show }) {
         phoneNumber,
         gender,
         role,
+        position,
     };
 
     const resetForm = () => {
@@ -37,18 +75,19 @@ function ModelForm({ id, childFunc, handleClose, show }) {
         setPhoneNumber('');
         setGender('');
         setRole('');
+        setPosition('');
     };
 
     const dispatch = useDispatch();
 
-    const handleActions = () => {
-        if (!id) {
+    const handleActions = async () => {
+        if (!idUser) {
             handleClose();
             dispatch(createNewUser(data));
             resetForm();
         } else {
             data = {
-                id,
+                id: idUser,
                 email,
                 firstName,
                 lastName,
@@ -56,40 +95,76 @@ function ModelForm({ id, childFunc, handleClose, show }) {
                 phoneNumber,
                 gender,
                 role,
+                position,
             };
-            console.log(data);
-            handleClose();
-            dispatch(editUser(data));
-            resetForm();
+
+            const canEdit = checkInput(
+                email,
+                '',
+                firstName,
+                lastName,
+                address,
+                phoneNumber,
+                gender,
+                position,
+                role,
+                handleShowToast,
+            );
+
+            if (canEdit) {
+                dispatch(editUser(data)).then(async (res) => {
+                    if (res.data.errCode === 0) {
+                        if (allUsers) {
+                            await allUsers();
+                            handleShowToast({
+                                type: 'success',
+                                message: res.data.message,
+                                header: 'Success!',
+                                icon: 'check',
+                            });
+                        }
+                        handleClose();
+                        resetForm();
+                    } else {
+                        handleShowToast({
+                            type: 'error',
+                            message: 'Something is wrong',
+                            header: 'Error!',
+                            icon: 'error',
+                        });
+                    }
+                });
+            }
         }
     };
 
     useEffect(() => {
-        childFunc.current = alertUser;
+        takeFcFromChildToParent.current = {
+            handleShowModel: handleShow,
+            handleGetInfoUser: handleGetInfoUser,
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [childFunc.current]);
+    }, [takeFcFromChildToParent.current]);
 
-    function alertUser(userNeedEdit) {
-        setEmail(userNeedEdit[0].email);
-        setFirstName(userNeedEdit[0].firstName);
-        setLastName(userNeedEdit[0].lastName);
-        setAddress(userNeedEdit[0].address);
-        setPhoneNumber(userNeedEdit[0].phonenumber);
-        setGender(userNeedEdit[0].gender);
-        setRole(userNeedEdit[0].roleId);
-    }
+    useEffect(() => {
+        getAllSelects().then((values) => {
+            setRoleSeclect(values[0]);
+            setGenderSeclect(values[1]);
+            setPositionSeclect(values[2]);
+        });
+    }, [role]);
 
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header
                 onClick={() => {
-                    if (id) {
+                    if (idUser) {
                         resetForm();
                     }
                 }}
                 closeButton
             >
-                <Modal.Title>Add new user</Modal.Title>
+                <Modal.Title>{idUser ? 'Edit user' : 'Add new user'}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
@@ -106,7 +181,7 @@ function ModelForm({ id, childFunc, handleClose, show }) {
                         />
                     </Form.Group>
 
-                    {id ? (
+                    {idUser ? (
                         true
                     ) : (
                         <Form.Group className="mb-3">
@@ -121,72 +196,110 @@ function ModelForm({ id, childFunc, handleClose, show }) {
                         </Form.Group>
                     )}
 
-                    <Form.Group className="mb-3">
-                        <Form.Label>First Name</Form.Label>
-                        <Form.Control
-                            onChange={(e) => {
-                                setFirstName(e.target.value);
-                            }}
-                            type="text"
-                            value={firstName}
-                        />
-                    </Form.Group>
+                    <div className="row">
+                        <Form.Group className="mb-3 col-6">
+                            <Form.Label>First Name</Form.Label>
+                            <Form.Control
+                                onChange={(e) => {
+                                    setFirstName(e.target.value);
+                                }}
+                                type="text"
+                                value={firstName}
+                            />
+                        </Form.Group>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label>Last Name</Form.Label>
-                        <Form.Control
-                            onChange={(e) => {
-                                setLastName(e.target.value);
-                            }}
-                            type="text"
-                            value={lastName}
-                        />
-                    </Form.Group>
+                        <Form.Group className="mb-3 col-6">
+                            <Form.Label>Last Name</Form.Label>
+                            <Form.Control
+                                onChange={(e) => {
+                                    setLastName(e.target.value);
+                                }}
+                                type="text"
+                                value={lastName}
+                            />
+                        </Form.Group>
+                    </div>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label>Address</Form.Label>
-                        <Form.Control
-                            onChange={(e) => {
-                                setAddress(e.target.value);
-                            }}
-                            type="text"
-                            value={address}
-                        />
-                    </Form.Group>
+                    <div className="row">
+                        <Form.Group className="mb-3 col-6">
+                            <Form.Label>Address</Form.Label>
+                            <Form.Control
+                                onChange={(e) => {
+                                    setAddress(e.target.value);
+                                }}
+                                type="text"
+                                value={address}
+                            />
+                        </Form.Group>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label>Phonenumber</Form.Label>
-                        <Form.Control
-                            onChange={(e) => {
-                                setPhoneNumber(e.target.value);
-                            }}
-                            type="text"
-                            value={phoneNumber}
-                        />
-                    </Form.Group>
-                    <Form.Select
-                        onChange={(e) => {
-                            setGender(e.target.value);
-                        }}
-                        aria-label="Default select example"
-                        value={gender === 1 ? '1' : '2'}
-                    >
-                        <option>Gender</option>
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
-                    </Form.Select>
-                    <Form.Select
-                        onChange={(e) => {
-                            setRole(e.target.value);
-                        }}
-                        aria-label="Default select example"
-                        value={role}
-                    >
-                        <option>Role</option>
-                        <option value="Amin">Amin</option>
-                        <option value="Doctor">Doctor</option>
-                        <option value="Patient">Patient</option>
-                    </Form.Select>
+                        <Form.Group className="mb-3 col-6">
+                            <Form.Label>Phonenumber</Form.Label>
+                            <Form.Control
+                                onChange={(e) => {
+                                    setPhoneNumber(e.target.value);
+                                }}
+                                type="text"
+                                value={phoneNumber}
+                            />
+                        </Form.Group>
+                    </div>
+
+                    <div className="row">
+                        <div className="mb-3 col-4">
+                            <Form.Select
+                                onChange={(e) => {
+                                    setGender(e.target.value);
+                                }}
+                                value={gender}
+                            >
+                                <option value="">Choose...</option>
+                                {genderSeclect.length > 0 &&
+                                    genderSeclect.map((gender, index) => {
+                                        return (
+                                            <option key={index} value={gender.valueVi}>
+                                                {gender.valueVi}
+                                            </option>
+                                        );
+                                    })}
+                            </Form.Select>
+                        </div>
+                        <div className="mb-3 col-4">
+                            <Form.Select
+                                onChange={(e) => {
+                                    setRole(e.target.value);
+                                }}
+                                value={role}
+                            >
+                                <option value="">Choose...</option>
+                                {roleSeclect.length > 0 &&
+                                    roleSeclect.map((role, index) => {
+                                        return (
+                                            <option key={index} value={role.valueVi}>
+                                                {role.valueVi}
+                                            </option>
+                                        );
+                                    })}
+                            </Form.Select>
+                        </div>
+                        <div className="mb-3 col-4">
+                            <Form.Select
+                                onChange={(e) => {
+                                    setPosition(e.target.value);
+                                }}
+                                value={position}
+                            >
+                                <option value="">Choose...</option>
+                                {positionSeclect.length > 0 &&
+                                    positionSeclect.map((position, index) => {
+                                        return (
+                                            <option key={index} value={position.valueVi}>
+                                                {position.valueVi}
+                                            </option>
+                                        );
+                                    })}
+                            </Form.Select>
+                        </div>
+                    </div>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
@@ -194,7 +307,7 @@ function ModelForm({ id, childFunc, handleClose, show }) {
                     variant="secondary"
                     onClick={() => {
                         handleClose();
-                        if (id) {
+                        if (idUser) {
                             resetForm();
                         }
                     }}
@@ -202,9 +315,10 @@ function ModelForm({ id, childFunc, handleClose, show }) {
                     Close
                 </Button>
                 <Button variant="primary" onClick={handleActions}>
-                    {id ? 'Save Changes' : 'Add New User'}
+                    {idUser ? 'Save Changes' : 'Add New User'}
                 </Button>
             </Modal.Footer>
+            {img && <img style={{ height: '400px', width: '400px' }} src={img} alt="anh" />}
         </Modal>
     );
 }

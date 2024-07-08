@@ -7,7 +7,7 @@ import { faUpload } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './user.module.scss';
 import TableUsers from './TableUsers';
-import { getAllRoles, getAllGenders, getAllPositions, checkInput, createANewUser } from '~/services/User';
+import { getAllSelects, checkInput, createANewUser } from '~/services/User';
 import Toast from '~/conponents/Toast';
 
 const cx = classNames.bind(styles);
@@ -28,7 +28,9 @@ function User() {
     const [genderInput, setGenderInput] = useState('');
     const [positionInput, setPositionInput] = useState('');
     const [roleInput, setRoleInput] = useState('');
-    // const [avatarInput, setAvatarInput] = useState('');
+    const [avatarBlob, setAvatarBlob] = useState('');
+
+    console.log(avatarBlob);
 
     const refreshTable = useRef();
     const handleShowToast = useRef();
@@ -41,15 +43,47 @@ function User() {
     });
 
     useEffect(() => {
-        Promise.all([getAllRoles(), getAllGenders(), getAllPositions()]).then((values) => {
+        getAllSelects().then((values) => {
             setRole(values[0]);
             setGender(values[1]);
             setPosition(values[2]);
         });
-    }, []);
+    }, [roleInput]);
 
     const deleteUrl = () => {
         window.URL.revokeObjectURL(url);
+    };
+
+    // const convertFileToBlob = async (file) => {
+    //     const reader = new FileReader();
+    //     if (file) {
+    //         await reader.readAsDataURL(file);
+    //     }
+    //     reader.addEventListener(
+    //         'loadend',
+    //         () => {
+    //             // convert image file to base64 string
+    //             setAvatarBlob(reader.result);
+    //         },
+    //         false,
+    //     );
+    // };
+
+    const convertFileToBlob = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+            reader.addEventListener(
+                'loadend',
+                () => {
+                    // convert image file to base64 string
+                    resolve(reader.result);
+                },
+                false,
+            );
+        });
     };
 
     const handleCreate = async () => {
@@ -77,23 +111,37 @@ function User() {
                 genderInput,
                 positionInput,
                 roleInput,
-            );
+                avatarBlob,
+            ).then((res) => {
+                if (res.data.errCode === 0) {
+                    refreshTable.current();
 
-            refreshTable.current();
+                    handleShowToast.current({
+                        type: 'success',
+                        message: res.data.message,
+                        header: 'Success!',
+                        icon: 'check',
+                    });
 
-            handleShowToast.current({
-                type: 'success',
-                message: 'You created user successfully!',
-                header: 'Success!',
-                icon: 'check',
+                    setEmailInput('');
+                    setPasswordInput('');
+                    setFirstNameInput('');
+                    setLastNameInput('');
+                    setPhoneNumberInput('');
+                    setAddressInput('');
+                    setGenderInput('');
+                    setPositionInput('');
+                    setRoleInput('');
+                    setAvatarBlob('');
+                } else if (res.data.errCode === 1) {
+                    handleShowToast.current({
+                        type: 'error',
+                        message: res.data.message,
+                        header: 'Error!',
+                        icon: 'error',
+                    });
+                }
             });
-
-            setEmailInput('');
-            setPasswordInput('');
-            setFirstNameInput('');
-            setLastNameInput('');
-            setPhoneNumberInput('');
-            setAddressInput('');
         }
     };
 
@@ -209,7 +257,7 @@ function User() {
                                 {gender.length > 0 &&
                                     gender.map((item, index) => {
                                         return (
-                                            <option key={index} value={item.valueVi}>
+                                            <option key={index} value={item.keyMap}>
                                                 {isLang ? item.valueEn : item.valueVi}
                                             </option>
                                         );
@@ -234,7 +282,7 @@ function User() {
                                     position.map((item, index) => {
                                         return (
                                             <>
-                                                <option key={index} value={item.valueVi}>
+                                                <option key={index} value={item.keyMap}>
                                                     {isLang ? item.valueEn : item.valueVi}
                                                 </option>
                                             </>
@@ -259,7 +307,7 @@ function User() {
                                 {role.length > 0 &&
                                     role.map((item, index) => {
                                         return (
-                                            <option key={index} value={item.valueVi}>
+                                            <option key={index} value={item.keyMap}>
                                                 {isLang ? item.valueEn : item.valueVi}
                                             </option>
                                         );
@@ -282,11 +330,13 @@ function User() {
                                 <input
                                     type="file"
                                     id="avatar"
-                                    onChange={(e) => {
+                                    onChange={async (e) => {
                                         const data = e.target.files;
                                         if (data.length > 0) {
                                             deleteUrl();
                                             const url = URL.createObjectURL(data[0]);
+                                            const base64 = await convertFileToBlob(data[0]);
+                                            setAvatarBlob(base64);
                                             setUrl(url);
                                         }
                                     }}

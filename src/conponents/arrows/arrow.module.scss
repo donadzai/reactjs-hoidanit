@@ -30,6 +30,10 @@
     &:active > .icon {
         color: rgb(181, 231, 237);
     }
+
+    &.disappear-next {
+        display: none;
+    }
 }
 
 .customize-btn-prev {
@@ -59,6 +63,10 @@
 
     &:active > .icon {
         color: rgb(181, 231, 237);
+    }
+
+    &.disappear-prev {
+        display: none;
     }
 }
 

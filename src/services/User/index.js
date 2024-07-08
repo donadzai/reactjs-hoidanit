@@ -12,7 +12,9 @@ const checkInput = (
     roleInput,
     handleShowToastFc,
 ) => {
-    const data = [
+    let isCreate = true;
+
+    let data = [
         emailInput,
         passwordInput,
         firstNameInput,
@@ -24,7 +26,7 @@ const checkInput = (
         roleInput,
     ];
 
-    const files = [
+    let files = [
         'Email',
         'Password',
         'First Name',
@@ -36,7 +38,20 @@ const checkInput = (
         'Role',
     ];
 
-    let isCreate = true;
+    if (passwordInput === '') {
+        data = [
+            emailInput,
+            firstNameInput,
+            lastNameInput,
+            phoneNumberInput,
+            addressInput,
+            genderInput,
+            positionInput,
+            roleInput,
+        ];
+
+        files = ['Email', 'First Name', 'Last Name', 'Phone Number', 'Adress', 'Gender', 'Position', 'Role'];
+    }
 
     for (let index = 0; index < data.length; index++) {
         if (!data[index]) {
@@ -69,6 +84,10 @@ const getAllPositions = async () => {
     return allPositions.data.data.data;
 };
 
+const getAllSelects = () => {
+    return Promise.all([getAllRoles(), getAllGenders(), getAllPositions()]);
+};
+
 const getAllUsers = async () => {
     try {
         const data = await AXIOS.get('/user');
@@ -88,8 +107,9 @@ const createANewUser = async (
     genderInput,
     positionInput,
     roleInput,
+    avatarBlob,
 ) => {
-    await AXIOS.post('/create-new-user', {
+    const res = await AXIOS.post('/create-new-user', {
         email: emailInput,
         password: passwordInput,
         firstName: firstNameInput,
@@ -99,7 +119,10 @@ const createANewUser = async (
         gender: genderInput,
         positionId: positionInput,
         roleId: roleInput,
+        image: avatarBlob,
     });
+
+    return res;
 };
 
 const deleteUser = async (id) => {
@@ -110,4 +133,4 @@ const deleteUser = async (id) => {
     }
 };
 
-export { checkInput, getAllRoles, getAllGenders, getAllPositions, createANewUser, getAllUsers, deleteUser };
+export { checkInput, getAllSelects, createANewUser, getAllUsers, deleteUser };

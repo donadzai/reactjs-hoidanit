@@ -28,7 +28,8 @@ function Toast({ getHandleShowToastFc }) {
 
     useEffect(() => {
         getHandleShowToastFc.current = handleShowToast;
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [getHandleShowToastFc.current]);
 
     return (
         <div ref={toastDOM} className={cx('toast-wraper')}>

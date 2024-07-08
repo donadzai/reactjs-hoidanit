@@ -9,6 +9,7 @@ function PrevArrow(props) {
     const { className, onClick } = props;
     const customizeBtn = cx(className, 'customize-btn-prev', {
         'position-customize-from-remote': props.customizeFromRemote,
+        'disappear-prev': props.disablePrev,
     });
     return (
         <div className={cx(customizeBtn)} onClick={onClick}>

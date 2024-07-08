@@ -6,7 +6,7 @@ export const editUser = (data) => {
     return async (dispatch) => {
         dispatch(editUserRequest());
         try {
-            await AXIOS.put('/edit-user', {
+            const res = await AXIOS.put('/edit-user', {
                 id: data.id,
                 email: data.email,
                 firstName: data.firstName,
@@ -19,6 +19,7 @@ export const editUser = (data) => {
             const users = await AXIOS.get('/user');
             dispatch(getUserSucess(users));
             dispatch(editUserSucess());
+            return res;
         } catch (e) {
             dispatch(editUserError());
         }

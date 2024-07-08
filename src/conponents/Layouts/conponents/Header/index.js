@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { faBars, faClockRotateLeft, faHeadset, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import styles from './Header.module.scss';
 const cx = classNames.bind(styles);
@@ -27,6 +26,7 @@ function Header() {
         setInterval(() => {
             getTitle();
         }, 3000);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const className = cx('child-content', {

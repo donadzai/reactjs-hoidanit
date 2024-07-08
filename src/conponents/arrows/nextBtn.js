@@ -10,6 +10,7 @@ function NextArrow(props) {
     const customizeBtn = cx(className, 'customize-btn-next', {
         'position-customize': props.customizeArrow,
         'position-customize-from-remote': props.customizeFromRemote,
+        'disappear-next': props.disableNext,
     });
     return (
         <div className={cx(customizeBtn)} onClick={onClick}>

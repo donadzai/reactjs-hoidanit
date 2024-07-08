@@ -6,6 +6,7 @@ import editUserFromReducer from './editUser/reducer';
 import deleteUserReducer from './deleteUser/reducer';
 import loginReducer from './authentication/reducer';
 import changeLangReducer from './translate/reducer';
+import getTopDoctors from './getTopDoctor/reducer';
 
 const rootReducer = combineReducers({
     getUser: getAllUser,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     deleteUserReducer: deleteUserReducer,
     login: loginReducer,
     changLang: changeLangReducer,
+    getTopDoctors: getTopDoctors,
 });
 
 export default rootReducer;
